@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Amazon Electronic · Catálogo{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --azul: #1a3d8f;
+        --azul-claro: #2aabe2;
+        --azul-btn: #27a9e3;
+        --gris-fondo: #eef1f5;
+        --gris-card: #f2f4f7;
+        --tinta: #1e2a3a;
+        --tinta-suave: #6b7688;
+        --estrella: #f5b400;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font-family: "Poppins", sans-serif; background: var(--gris-fondo); color: var(--tinta); }
+
+      header {
+        background: #fff;
+        border-bottom: 3px solid var(--azul);
+        padding: 1.5rem 2rem;
+        display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+      }
+      .logo { display: flex; align-items: baseline; gap: 0.5rem; }
+      .logo b { font-size: 1.6rem; font-weight: 800; color: var(--azul); letter-spacing: -0.02em; }
+      .logo span { font-size: 1.6rem; font-weight: 300; color: var(--tinta); }
+      nav { display: flex; gap: 0.5rem; }
+      nav a {
+        text-decoration: none; color: var(--tinta); font-size: 0.85rem; font-weight: 500;
+        padding: 0.5rem 1.1rem; border-radius: 6px; transition: all 0.2s;
+      }
+      nav a:hover { background: var(--gris-fondo); }
+      nav a.activo { background: var(--azul); color: #fff; }
+
+      main { max-width: 1100px; margin: 2rem auto; padding: 0 1.5rem; }
+
+      footer {
+        background: var(--azul); color: #fff; text-align: center;
+        padding: 1.5rem; font-size: 0.82rem; margin-top: 3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <b>AMAZON ELECTRONIC</b><span>Store</span>
+      </div>
+      <nav>
+        <a href="{% url 'catalogo:home' %}">Inicio</a>
+        <a href="{% url 'catalogo:catalogo' %}" class="activo">Catálogo</a>
+        <a href="/admin/">Admin</a>
+      </nav>
+    </header>
+
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+      &copy; 2026 IS093A · Semana 11 · Django MTV · Catálogo de Productos Tecnológicos
+    </footer>
+  </body>
+</html>

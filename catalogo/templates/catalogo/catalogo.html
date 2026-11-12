@@ -1,0 +1,57 @@
+{% extends "catalogo/base.html" %}
+
+{% block title %}{{ titulo }} · Amazon Electronic{% endblock %}
+
+{% block content %}
+  <!-- Encabezado estilo banner de la imagen -->
+  <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:2rem; border-bottom:2px solid #d4dae3; padding-bottom:1rem;">
+    <h2 style="font-size:2rem; font-weight:800; color:var(--azul);">AMAZON ELECTRONIC</h2>
+    <h2 style="font-size:2rem; font-weight:300; color:var(--tinta);">{{ titulo }}</h2>
+  </div>
+
+  {% if productos %}
+    <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:1.5rem;">
+      {# {% for %}: itera cada producto del QuerySet #}
+      {% for producto in productos %}
+        <article style="background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 6px 20px -12px rgba(26,61,143,0.3); display:flex; flex-direction:column;">
+          <!-- "Imagen" del producto (bloque gris con inicial, como placeholder) -->
+          <div style="background:var(--gris-card); height:180px; display:flex; align-items:center; justify-content:center; position:relative;">
+            <span style="font-size:3.5rem; font-weight:800; color:#c4ccd8;">{{ producto.nombre|first|upper }}</span>
+            <span style="position:absolute; top:0.75rem; left:0.75rem; background:var(--azul); color:#fff; font-size:0.66rem; text-transform:uppercase; letter-spacing:0.08em; padding:0.2rem 0.6rem; border-radius:4px;">{{ producto.get_categoria_display }}</span>
+          </div>
+
+          <div style="padding:1.1rem 1.2rem 1.3rem; flex:1; display:flex; flex-direction:column;">
+            <h3 style="font-size:0.95rem; font-weight:600; text-transform:uppercase; letter-spacing:0.02em; color:var(--tinta); min-height:2.4em;">{{ producto.nombre }}</h3>
+
+            <!-- Reviews con estrellas -->
+            <p style="font-size:0.8rem; color:var(--tinta-suave); margin:0.3rem 0;">
+              <span style="color:#f5b400;">★★★★</span><span style="color:#d4dae3;">★</span>
+              {{ producto.reviews }} Reviews
+            </p>
+
+            <!-- Precio + condicional de stock -->
+            {% if producto.stock == 0 %}
+              <p style="font-size:1.3rem; font-weight:700; color:#c0392b; margin:0.4rem 0;">Agotado</p>
+            {% else %}
+              <p style="font-size:1.4rem; font-weight:700; color:var(--tinta); margin:0.4rem 0;">${{ producto.precio }}</p>
+            {% endif %}
+
+            <!-- Botón Buy Now estilo imagen -->
+            <button style="margin-top:auto; background:var(--azul-btn); color:#fff; border:none; padding:0.7rem; border-radius:999px; font-family:inherit; font-weight:500; font-size:0.9rem; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:0.5rem;"
+              {% if producto.stock == 0 %}disabled style="background:#b0b8c4; cursor:not-allowed;"{% endif %}>
+              Buy Now →
+            </button>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+
+    <p style="margin-top:1.5rem; text-align:center; color:var(--tinta-suave); font-size:0.85rem;">
+      {{ productos|length }} producto{{ productos|length|pluralize }} disponible{{ productos|length|pluralize }}
+    </p>
+  {% else %}
+    <p style="background:#fff; border-radius:12px; padding:3rem; text-align:center; color:var(--tinta-suave);">
+      No hay productos disponibles. Agrégalos desde el panel de administración.
+    </p>
+  {% endif %}
+{% endblock %}
